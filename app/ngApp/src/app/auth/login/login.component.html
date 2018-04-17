@@ -1,0 +1,60 @@
+<div class="login">
+  <div class="flip">
+
+    <div class="form-login">
+      <h1 class="title">Авторизация</h1>
+      <fieldset class="fieldset">
+        <form [formGroup]="login_form" (ngSubmit)="onSubmit()">
+          <input class="input-form" type="email" placeholder="Логин или Email" formControlName="email" required />
+          <p
+            *ngIf="login_form.get('email').invalid && login_form.get('email').touched"
+          >
+            <!--Ключ ошибки 'Введите корректный email' является email(как узнать, переходим в консоле в браузере controls->user->controls->email->errors)-->
+            <span *ngIf="login_form.get('email').errors['email']">Введите корректный email</span>
+            <span *ngIf="login_form.get('email').errors['emailIsUsed']">Такой email уже существует</span>
+          </p>
+          <input class="input-form" type="password" placeholder="Пароль" formControlName="pass" required />
+
+          <p
+            *ngIf="login_form.get('pass').invalid && login_form.get('pass').touched"
+          >
+
+          <span
+            *ngIf="login_form.get('pass').errors['required']"
+          >
+		  Пароль не должен быть пустым!
+		  </span>
+            <span
+              *ngIf="login_form.get('pass').errors['PasswordIsUse']"
+            >
+		  Пароль не верный!Введите, пожалуйста, верный пароль.
+		  </span>
+          </p>
+
+          <input class="input-form" type="submit" value="Войти" [disabled]="login_form.invalid"/>
+        </form>
+        <p><a class="flipper" routerLink="/registration-form">Нет аккаунта? Регистрация.</a><br>
+          <a class="flipper" routerLink="/registration-form">Забыли пароль?</a></p>
+      </fieldset>
+    </div>
+
+    <!--<div class="form-signup">-->
+    <!--<h1 class="title">Регистрация</h1>-->
+    <!--<fieldset class="fieldset">-->
+    <!--<p class="login-msg"></p>-->
+    <!--<form>-->
+    <!--<input class="input-form" type="email" placeholder="Введите Ваш email адрес" required />-->
+    <!--<input class="input-form" type="password" placeholder="Введите пароль" required />-->
+    <!--<input class="input-form" type="text" placeholder="Имя пользователя" required />-->
+    <!--<input class="input-form" type="submit" value="Зарегистрироваться" />-->
+    <!--</form>-->
+
+    <!--<a href="#" class="flipper">Уже зарегистрированы? Войти.</a>-->
+    <!--</fieldset>-->
+    <!--</div>-->
+
+  </div>
+
+</div>
+
+

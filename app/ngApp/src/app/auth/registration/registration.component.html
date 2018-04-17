@@ -1,0 +1,63 @@
+<div class="login">
+  <div class="flip">
+    <div class="form-signup">
+      <h1 class="title">Регистрация</h1>
+      <fieldset class="fieldset">
+        <p class="login-msg"></p>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div formGroupName="user">
+            <input class="input-form" type="email" placeholder="Введите Ваш email адрес" formControlName="email" required />
+            <p
+              *ngIf="form.get('user.email').invalid && form.get('user.email').touched"
+            >
+              <!--Ключ ошибки 'Введите корректный email' является email(как узнать, переходим в консоле в браузере controls->user->controls->email->errors)-->
+              <span *ngIf="form.get('user.email').errors['email']">Введите корректный email</span>
+              <span *ngIf="form.get('user.email').errors['emailIsUsed']">Такой email уже существует</span>
+            </p>
+
+            <input class="input-form" type="password" placeholder="Введите пароль" formControlName="pass" required />
+            <!--Определяем состояние контрола,выводить или не выводить параграф "Пароль не должен быть пустым!"-->
+            <!--form.get('pass').invalid - с помощью метод get получаем контрол и проверяем его состояние, в качестве аргумента,передаем название того контола,который необходимо получить-->
+            <p
+              *ngIf="form.get('user.pass').invalid && form.get('user.pass').touched"
+            >
+
+          <span
+            *ngIf="form.get('user.pass').errors['required']"
+          >
+		  Пароль не должен быть пустым!
+		  </span>
+              <span
+                *ngIf="form.get('user.pass').errors['lengthError']"
+              >
+		  Пароль не должен быть меньше {{charsCount}}х символов!
+		  </span>
+            </p>
+          </div>
+          <input class="input-form" type="text" placeholder="Подтвердите пароль" formControlName="user_name" required />
+          <!--
+          [disabled]="form.invalid"  -  блокируем кнопку если форма не валидна,т.е. не корректно вписанны данные
+           -->
+          <input class="input-form" type="submit" value="Зарегистрироваться" [disabled]="form.invalid" />
+        </form>
+
+        <a routerLink="/login-form" class="flipper">Уже зарегистрированы? Войти.</a>
+      </fieldset>
+    </div>
+
+    <!--<div class="form-login">-->
+    <!--<h1 class="title">Авторизация</h1>-->
+    <!--<fieldset class="fieldset">-->
+    <!--<form>-->
+    <!--<input class="input-form" type="email" placeholder="Логин или Email" required />-->
+    <!--<input class="input-form" type="password" placeholder="Пароль" required />-->
+    <!--<input class="input-form" type="submit" value="Войти" />-->
+    <!--</form>-->
+    <!--<p><a href="#" class="flipper">Нет аккаунта? Регистрация.</a><br>-->
+    <!--<a href="#" class="flipper">Забыли пароль?</a></p>-->
+    <!--</fieldset>-->
+    <!--</div>-->
+
+  </div>
+
+</div>
