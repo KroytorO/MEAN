@@ -1,13 +1,10 @@
 var mongoose = require('mongoose');
-// var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt');
 
 var UserSchema=new mongoose.Schema({
     name:String,
     age:Number
 })
-
-var User = mongoose.model('User', UserSchema);
-
 
 
 // var UserSchema = new mongoose.Schema({
@@ -53,8 +50,8 @@ var User = mongoose.model('User', UserSchema);
 //             })
 //         });
 // }
-//
-// //hashing a password before saving it to the database
+
+//hashing a password before saving it to the database
 // UserSchema.pre('save', function (next) {
 //     var user = this;
 //     bcrypt.hash(user.password, 10, function (err, hash) {
@@ -66,6 +63,6 @@ var User = mongoose.model('User', UserSchema);
 //     })
 // });
 
-
+var User = mongoose.model('User', UserSchema);
 
 module.exports = User;

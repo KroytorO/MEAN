@@ -2,41 +2,84 @@ let path = require('path');
 let fs = require('fs');
 var User = require('./api/models/user.js');
 
+
 module.exports = function (app) {
+
+    /**Добавление нового юзера в БД*/
+const user = new User({name: 'Dasha', age:21})
+user.save()
+
     app.get('/app*', function (req, res) {
         res.sendFile(path.join(__base, '/app/ngApp/dist/index.html'));
     });
 
+
 // получение списка данных
-//     app.get('/api/json/getUsers', function(req, res){
-//
-//         var content = fs.readFileSync(path.join(__base,'/app/backend/data/user.json'));
-//         var users = JSON.parse(content);
-//         res.send(users);
-//     });
+    app.get('/api/json/getUsers', function(req, res){
+
+        var content = fs.readFileSync(path.join(__base,'/app/backend/data/user.json'));
+        var users = JSON.parse(content);
+        // var mir = null;
+        // for(var i=0; i<users.length; i++){
+        //         mir = users[i];
+        //     }
+        // res.send(mir);
+        res.send(users);
+    });
 
 
     app.get('/user', (req, res) => {
-        User.find((err , user) => {
-            res.json({user});
+         User.find((err , user) => {
+        res.send(user);
         })
+
     });
 
-    // app.get('/api/json/getUserByEmail',function (req,res) {
-    //
-    //     var content = fs.readFileSync(path.join(__base,'/backend/data/user.json'));
-    //     var userEmail = JSON.parse(content);
-    //     res.send(userEmail);
-    //
-    // })
+    app.get('/api/json/getUserByEmail',function (req,res) {
+
+        var content = fs.readFileSync(path.join(__base,'/app/backend/data/authuser.json'));
+        var userEmail = JSON.parse(content);
+        res.send(userEmail);
+
+    })
+
+
+    /**My proba post request*/
+    app.post('/api/json/postUserByEmail',function (req,res) {
+        if(!req.body) return res.sendStatus(400);
+
+        var userName = req.params.email;
+        //var user = {name: userName, age: userAge};
+       var user=null;
+        var content = fs.readFileSync(path.join(__base,'/app/backend/data/authuser.json'));
+        var userEmail = JSON.parse(content);
+        // находим в массиве пользователя по email
+        for(var i=0; i<userEmail.length; i++){
+            if(userEmail[i].email===userName){
+                user = userEmail[i];
+                break;
+            }
+        }
+        // отправляем пользователя
+        if(user){
+            res.send(user);
+        }
+        else{
+             // res.status(403).send();
+            res.sendStatus(404);
+            // res.send('Такой чувак есть');
+        }
+
+    })
+
 
     /** Proba***/
 
-
-//POST route for updating data
+//
+// //POST route for updating data
 //     app.post('/login/postUserData', function (req, res, next) {
 //         // confirm that user typed same password twice
-//         if (req.body.password !== req.body.passwordConf) {
+//         if (req.body.pass !== req.body.passwordConf) {
 //             var err = new Error('Passwords do not match.');
 //             err.status = 400;
 //             res.send("passwords dont match");
@@ -64,7 +107,9 @@ module.exports = function (app) {
 //                 }
 //             });
 //
-//         } else if (req.body.logemail && req.body.logpassword) {
+//         }
+//
+//         else if (req.body.logemail && req.body.logpassword) {
 //             User.authenticate(req.body.logemail, req.body.logpassword, function (error, user) {
 //                 if (error || !user) {
 //                     var err = new Error('Wrong email or password.');
@@ -82,7 +127,7 @@ module.exports = function (app) {
 //         }
 //     })
 //
-// // GET route after registering
+// // // GET route after registering
 //     app.get('/profile', function (req, res, next) {
 //         User.findById(req.session.userId)
 //             .exec(function (error, user) {
@@ -100,7 +145,7 @@ module.exports = function (app) {
 //             });
 //     });
 //
-// // GET for logout logout
+// // // GET for logout logout
 //     app.get('/logout', function (req, res, next) {
 //         if (req.session) {
 //             // delete session object
@@ -133,7 +178,5 @@ module.exports = function (app) {
         }
     });
      */
-
-
 
 };

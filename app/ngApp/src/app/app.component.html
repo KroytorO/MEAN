@@ -1,7 +1,19 @@
 <div class="content">
 <router-outlet></router-outlet>
-  <div>
-  <p >Имя пользователя: {{user.name}}</p>
-  <p>Возраст пользователя: {{user.age}}</p>
+      <div>
+        <h1>Я база MongoDB</h1>
+        <div *ngFor="let userDB of user">
+      <p >Имя пользователя: {{userDB?.name}}</p>
+      <p>Возраст пользователя: {{userDB?.age}}</p>
+        </div>
+    </div>
+
+      <div>
+      <h1>Я json файл</h1>
+      <div *ngFor="let userjsonfile of userjson">
+        <p >Имя пользователя: {{userjsonfile?.name}}</p>
+        <p>Возраст пользователя: {{userjsonfile?.age}}</p>
+      </div>
+    </div>
 </div>
-</div>
+

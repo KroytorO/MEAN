@@ -16,4 +16,11 @@ import {Observable} from "rxjs/Observable";
     getUserByEmail(email:string):Observable<User>{
       return this.http.get<User>(`${this.serverApi}/api/json/getUserByEmail?email=${email}`)
     }
+
+// Метод post
+  postUserByEmail(formData):Observable<User>{
+    return this.http.post<User>(`${this.serverApi}/api/json/postUserByEmail`,formData)
+  }
+
+
   }

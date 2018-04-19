@@ -8,7 +8,7 @@ import {UserService} from "../../shared/services/users.service";
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-
+ providers:[UserService]
 })
 export class LoginComponent implements OnInit {
 
@@ -43,11 +43,24 @@ export class LoginComponent implements OnInit {
 //        else{
 //          alert('Такого пользователя не существует');
 //        }
-       console.log(formData);
+       console.log('i formdata'+' '+  formData.email);
        console.log(user);
        }
      )
     // console.log('Submited!', this.login_form);
+    /**Post*/
+    this.userService.postUserByEmail(formData).subscribe((response)=>{
+//        if(user){
+// if(user.password===formData.password){}
+//        }
+//        else{
+//          alert('Такого пользователя не существует');
+//        }
+        console.log('I am post' + ' '+ response);
+      }
+    )
+
+
   }
 
   /**Создание собственного валидатора*/

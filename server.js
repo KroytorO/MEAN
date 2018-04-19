@@ -18,9 +18,11 @@ var db = mongoose.connection;
 //handle mongo error
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
+
     // we're connected!
 });
 
+//use sessions for tracking logins
 app.use(session({
     secret: 'work hard',
     resave: true,
@@ -36,9 +38,11 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-require(path.join(__base, 'app/proxy'))(app);// что значит?
+
 
 app.use(express.static(path.join(__base, '/app/ngApp/dist')));
+app.use(express.static(path.join(__base, '/app/ngApp/src/app/auth/login/login.component.css')));
+require(path.join(__base, 'app/proxy'))(app);// что значит?
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -56,5 +60,5 @@ app.use(function (err, req, res, next) {
 
 
 app.listen(port, () => {
-    console.log('We are live on ' + port);
+    console.log('We are live on ' + port)
 });
